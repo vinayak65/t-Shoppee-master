@@ -1,0 +1,319 @@
+set PATH=%PATH%;C:\ngBuild\node-v10.15.3-win-x64
+
+Cognito Mode == does not store history 
+private onLoginSuccess = (callback: CognitoCallback, session: CognitoUserSession) => { 
+
+     console.log("In authenticate User onSuccess callback"); 
+      AWS.config.credentials = this.cognitoUtil.buildCognitoCreds(session.getIdToken().getJwtToken()); 
+
+     let clientParams: any = {}; 
+     if (environment.sts_endpoint) {
+        clientParams.endpoint = environment.sts_endpoint; 
+     } 
+     let sts = new STS(clientParams); 
+      sts.getCallerIdentity(function( 
+
+
+ResponseStatusException Class we can create an instance of it providing an HttpStatus 
+and optionall a reason and a cause 
+
+@GetMapping(value ="/{id}")
+public Foo findById(@PathVariable("id") Long id, HttpServletResponse response) {
+
+    try { 
+
+          Foo resourceById = RestPreconditions.checkFound(service.findOne(id));
+          eventPublisher.publishEvent(new SingleResourceRetrievedEvent(this,response));
+          return resourceById;
+     } 
+    catch (MyResourceNotFoundException exc ) { 
+         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Foo Not Found", exc); 
+          } 
+} 
+
+Excellent for Prototyping: We can implement a basic solution quite fast 
+One Type, multiple status codes: One Exception Type can lead to multiple different response 
+ reduces tight coupleing compared to @ExceptionHandler
+
+e.g we can implement a @ControllerAdvice globally, but also REsponseStatusec
+
+However we need to be careful, if the same exception can be  handled in multiple way 
+
+http.authoriseRequests() 
+       .antMatchers("/admin/*").hasAnyRole("ROLE_ADMIN")
+  
+Custom AccessDeniedHandler implements AccessDeniedHandler { 
+  handle 
+     response.sendRedirect("/my-error-page"); 
+using .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+
+@ControllerAdvice 
+public 
+
+-------- Spring XML based configuration  .. annotation based configuration 
+
+
+@Controller and @RequestMapping 
+@RequestPAram which indicates method param bound to a web request paramater 
+
+View Components 
+  Create JSP pages that visible on the user machine 
+
+@Configuration : Treat as configuration file for Spring MVC application 
+@EnableWebMvc : Adding this annotation to a configuration class enable MVC Configuration 
+@ComponentScan : Scan starts from base package and registers all controllers, service, beans etc. 
+@Bean : indicates that 
+
+1. FrontControllerConfig extends AbstractAnnotationConfigDispatcherServletInitializer 
+
+This class is responsible to notify Sprign this our front controller i.e register 
+the DispactherServlet 
+
+getRootConfigClasses : Pass the Spring MVC configured class name 
+getServletMappings : pass the URL pattern i.e for which specific URL pattern you want to call 
+this controller  
+
+@Configuration 
+@EnableWebMvc
+@ComponentScan("")
+public class WebMvcConfig { 
+   @Bean 
+   public InternalResourceViewResolver viewResolver() { 
+        InternalResourceViewResolver vr = new InternalResourceViewResolver() 
+       // set location of views
+       vr.setPrefix("/"); 
+       // set extnesion of views 
+       vr.setSuffix(".jsp") 
+  
+}
+
+@Controller 
+public class HelloController { 
+   @RequestMapping("/hello")
+   public ModelAndView greet(@RequestParam("name") String name ) { 
+
+   }
+5 @GetMApping @Post@Put    
+
+@RequestBody LoginForm loginForm 
+ 
+ResponseEntity.ok(HttpStatus.OK) 
+
+@RestController no need for @ResponseBody annotation it is done by default here 
+
+ResponseStatusException 
+ is a programmatic alternatice to @ResponseStatus and is the base class for 
+exceptions used for applying a status code to an HTTP REsponse. It's a RuntimeException 
+and hence not required to be explicitly added in a method signature 
+
+Spring provides 3 constructors to generate ResponseStatusException: 
+
+ResponseStatusException (HttpStatus status) 
+ResponseStatusException (HttpStatus status, String reason) 
+
+in Spring HandlerExceptionResolver intercepts an processes any exception raised and not 
+handled by a Controller 
+
+One of these handlers, ResponseStatusExceptionResolver, looks for any 
+ResponseStatusException or uncaught exceptions annotated by @ResponseStatus then 
+extracts the Http Status code & reason and includes them in the HTTP response 
+
+benefits 
+ 1 1st exceptions of the ame type can be processe separately and different status codes can 
+   be set on the response, reducing tight coupling 
+ 2. 2nd avoid creation of unnecessary additional exception classes 
+3. finally it give more control over exception handling as the exceptions can be created   
+   programmatically 
+
+Generate ResponseStatusException 
+   @GetMapping("/actor/{id}")
+   public String getActorName(@PathVariable("id") int d ) { 
+        try { 
+             return actorService.getActor(id); 
+         } 
+         catch(ActorNotFoundException ex) 
+               throw new ResponseStatusException( HttpStatus.NOT_FOUND, "Actor Not Fund", ex); 
+         } 
+} 
+
+Spring Boot provides a default /error mapping, returing a JSON response with HTTP status and 
+exception message 
+     curl -i -s -X GET http://localhost:8080/actor/8  
+  HTTP / 1.1 404 
+  Content-Type : application/json; charset=UTF- 8 
+  Transfer-enoding : chunked 
+  Date 
+   {  
+        "timestamp" : "2018-01-28" 
+        "status": 404, 
+         "error" : "Not Found" 
+          "message" : "Actor Not Found" 
+          "path" : "actor/8"
+    } 
+
+different Status code - Same Exception type 
+
+@PutMapping("/actor/{id}/{name}")
+public String updateActorName( @PathVariable("id") int id, @PathVariable("name") String name) 
+ {  
+      try { 
+            return actorService.updateActor(id, name) 
+     } 
+      catch(ActorNotFoundExcpetion ex) { 
+          REsponseStatusException(BAD_REQUEST, "Provide correct actor id", ex); 
+
+     } 
+} 
+
+Different Status Code -- Same 
+100 continue 101 switicing protocols 102 Processing 
+
+200 Sucesss 
+203 non Authoritative Info 
+206 Partial Content
+226 IM USed  response is a representation of result of one 
+     or more instance-manipulation  
+    combine this response with other previous or future response 
+   if so the headers of the resulting instance are result of comibing headers   from 
+         A-IM header filed   response with 226 may be stored by a  cache 
+    used in reply to subsequent request, subject to HTTP expiration 
+    any Cache-control headers 
+
+300 multiple choices   any one of a set of representations, each with its own specifc location 
+         and agent-driven negotiation information is being provided so that the 
+       user can select a preferred rep and redirect it request to that location 
+
+301 moved permanently unless it was a HEAD request the response should invlude 
+     an entity containing a list of resource characteristis and locations 
+     from which the user or user =0agent  
+302 Found 
+303 See Other  
+304 Not Modified 
+305 Use Proxy 
+306 Unused  
+307 308 
+
+403 -- Forbidden  405  mehtod not allowed 
+409 Conflict 
+412 precondition failed 
+415 Unsupported media type 
+10 * 3 == 33 error codes 
+401 similar to 403 but specifically for use when authentication 
+   is possible but has failed or not yet been provided 
+   The response must include tthe WWW-Authenticate header field  
+    containing a challenge applicable to the req resouce 
+   
+402 this code is reserved for future use 
+406 not acceptable, the resource identified by the request 
+    is only capable of generating response entities which 
+    have content charat not acceptable headers sent in the 
+     request 
+    Unless it was a Head Request, the response shou include 
+     an entity containing a list of avalable entity char 
+    and location from which user can choose one most appropriate 
+407 Proxy Authentication Required 
+408 Request Timeout 
+
+Entity format is specified by the media type given in the Content-Type Header 
+
+Unless it was a head request, the response should include 
+  an entity containig a list of availalbe entity char 
+   and locations from which 
+
+407 proxy authentication required 
+408 Request timeout 
+409 Conflict  
+
+ 503 Service Unavailable 
+ 504 Gateway Time out  (The Server, while acting as a gatewat 
+     or proxy, did not receive a timely  
+     response from the upstream server specified by the URI   
+     e.g HTTP, FTP, LDAP) or some other auxiliary server 
+     e.g DNS it needed to access in attempting to complete the 
+     req 
+      Note: to Implement some deployed proxies are known  
+     to return 400 or 500 when DNS lookups time out 
+    
+akhlak04051983@123
+
+MessageDispatcher has several properties, for setting endpoint adapters, mappings 
+exception resolvers. However, setting these properties is not required, since
+ the dispatcher will automatically detect all of these types that are registered in app context. Only 
+when detection needs to be overriden , should these properties be set. 
+The Message dispatcher operates on a message context, and not transpor-specific input stream/ out
+As a result, transport specific requests need to read into a Message Context.
+For HTTP this 
+
+What is a web service ? 
+  different types of web services 
+ SOAP Web Services 
+SOAP 
+ SOAP Envelop 
+  SOAP Header Body 
+ WSDL 
+ 
+Configure a JAXB plugin 
+ Endpoint 
+   What is a Message Dispatcher Servlet 
+  how can you configure Message D
+generate WSDL using Spring Web Seriev 
+
+Dead Letter Queue in MQ is a Queue to archive 
+messages for a non existent queue. e.g QMGR  receives a messages 
+for queue ABC and it didn't exist on 
+
+Queue Connection factory 
+creating provider queue destination 
+configuring advanced properties for JMSQueueConnectionFactory and JMSOutboundQueue
+
+Accessin WMQ from WAS 
+WMQ 7 features usefula for WAS 
+
+USes administered Object to define provider and configuration 
+can be changed without compiling application 
+
+supports point to pont messging and publish/subscribe messagiing 
+
+Java application interactions to be loosely coupled 
+ JMS app can be coded to be ignorant of the underlying JMS provider 
+
+Message driven beans MDB 
+  Special EJB that has onMessage Java method to receive messages 
+   JEE Container deals with getting the message 
+EJB 
+  try { 
+    Connection conn = cf.createConnection(); 
+     conn.start(); 
+    Session sess = conn.createSession(true,Session.AUTO_ACKNOWLEDGE); 
+     MessageConsumer consumer = sess.createConsumer(d); 
+     Message msg 
+} 
+IBM BPM == Shared Object 
+IBM BPM == how does UCA identify the next instance 
+IBM BPM connect to Database 
+IBM BPM Coach life cycle 
+IBM BPM Actvity one to other Activity in other BPD exception other (Process Center) 
+
+MQ v7 JCA 1.5 RA and is installed as a resouce adapter. 
+instead the native library path for te RA is used to identify the location of required native libs 
+
+SIB is a native component of WAS, providing JMS messaing 
+logical entity , Messasing engines ins application server manage the physical messages 
+
+
+
+
+WAS app connect to Qmanger using Bindings -- when application and queue manger are on same server 
+Client - chen application server and queue mange are on separate networjed servers 
+
+MQ_INSTALL_ROOT 
+  } 
+
+
+CCDT file on WebSpjere MS ClientChannel Defintion tabe is a binary file 
+which contains details required by MQ clients JAva application usign JSM 
+to connect to MQ Server.In order to connect to MQ server 
+host name 
+port name 
+serve channel name 
+

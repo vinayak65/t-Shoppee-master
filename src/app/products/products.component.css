@@ -1,0 +1,9 @@
+.title-background { 
+    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.6)), url('/assets/images/all-t-background.jpg'); 
+    padding-top:5rem; 
+    padding-bottom:5rem; 
+    color:#fff; 
+    text-align:center;
+    background-size:cover;
+    background-position: center
+}

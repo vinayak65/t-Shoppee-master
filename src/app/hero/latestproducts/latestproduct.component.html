@@ -1,0 +1,24 @@
+<div class="container pt-4 pb-4">
+    <div class="row pb-3">
+        <div class="col-12 text-center">
+            <h1>Latest Arrivals</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" *ngFor="let product of featuredproducts">
+            <div class="card">
+                <img [src]="product.thumbnailUrl" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">{{ product.title | trim:50 }}</p>
+                    <a href="#" class="btn btn-success">Buy Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-4 pb-4">
+        <div class="col-12 text-center">
+            <a routerLink="../products" class="btn btn-primary">All Products</a>
+        </div>
+    </div>
+</div>

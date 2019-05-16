@@ -1,0 +1,27 @@
+<div class="container-fluid title-background">
+    <h1 class="display-3">All Collection</h1>
+</div>
+<div class="container pt-4 pb-4">
+    <div class="row">
+        <div class="col-9">
+            <div class="row">
+                <div class="col-4 pb-3" *ngFor="let product of productlist">
+                    <div class="card">
+                        <img [src]="product.thumbnailUrl" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text">{{ product.title | trim:50 }}</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <app-cartbutton [singleproduct]="product" ></app-cartbutton> &nbsp;
+                            <a routerLink="productdetails/{{ product.id }}" class="btn btn-warning">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <app-cart></app-cart>
+        </div>
+    </div>
+</div>

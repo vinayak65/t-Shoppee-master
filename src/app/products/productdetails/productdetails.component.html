@@ -1,0 +1,12 @@
+<div class="container pt-5">
+    <div class="row" *ngFor="let item of singleproduct">
+        <div class="col-6">
+            <img [src]="item.url" class="img-fluid"/>
+        </div>
+        <div class="col-6">
+            <h2>{{item.id*100 | currency:'INR'}}</h2>
+            <h4 class="mt-5 mb-5">{{item.title | titlecase}}</h4>
+            <a href="" class="btn btn-secondary">Add to cart</a>
+        </div>
+    </div>
+</div>

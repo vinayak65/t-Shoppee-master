@@ -1,0 +1,19 @@
+<div class="row pt-4 pb-4">
+    <div class="col-6">
+        <input type="text" class="form-control" placeholder="Search users">
+    </div>
+</div>
+<div class="row">
+    <div class="col-4" *ngFor="let u of userList">
+        <div class="card" style="width: 18rem;">
+            <img src="{{ u.userPhoto }}" class="card-img-top" alt="{{ u.userName }}">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ u.userId }} | {{ u.userName }}</h5>
+                <p class="card-text">e: <a href="mailto:{{ u.userEmail }}">{{ u.userEmail }}</a></p>
+                <button href="#" class="btn btn-primary" (click)="showDetails(u)">Show</button>&nbsp;
+                <button href="#" class="btn btn-danger" [disabled]="!u.isAdmin">Delete</button>&nbsp;
+                <button href="#" class="btn btn-warning">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
